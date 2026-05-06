@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Eccel C1 — connection mode",
-        "description": "Choose how Home Assistant connects to the Eccel C1 RFID reader.",
+        "description": "Choose how Home Assistant connects to the Eccel C1 RFID reader.\n\n**Hub (TCP server):** Home Assistant listens for incoming connections — the reader must be configured as a TCP client.\n\n**Client:** Home Assistant connects to the reader — the reader must be configured as a TCP server.",
         "data": {
           "connection_mode": "Connection mode"
         }

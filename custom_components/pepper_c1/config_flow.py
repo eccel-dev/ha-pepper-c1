@@ -113,8 +113,8 @@ class PepperC1ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_CONNECTION_MODE, default=CONNECTION_MODE_HUB): selector.SelectSelector(
                     selector.SelectSelectorConfig(
                         options=[
-                            {"value": CONNECTION_MODE_HUB, "label": "Hub (serwer TCP) — czytniki łączą się z HA"},
-                            {"value": CONNECTION_MODE_CLIENT, "label": "Klient — HA łączy się z czytnikiem po IP"},
+                            {"value": CONNECTION_MODE_HUB, "label": "Hub (serwer TCP) — czytniki łączą się z HA (czytnik: tryb klienta TCP)"},
+                            {"value": CONNECTION_MODE_CLIENT, "label": "Klient — HA łączy się z czytnikiem po IP (czytnik: tryb serwera TCP)"},
                         ],
                         mode=selector.SelectSelectorMode.LIST,
                     )

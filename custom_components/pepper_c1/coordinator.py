@@ -8,6 +8,7 @@ import queue as _queue
 import socket
 import threading
 import time
+import uuid
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -22,6 +23,13 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+_PEPPER_TAG_NS = uuid.UUID("5b4ac81e-ec3b-4f5e-b8e0-f2e7f5e5f50e")
+
+
+def _uid_to_tag_id(uid: str) -> str:
+    """Map a raw RFID UID to a deterministic UUID expected by HA's tag system."""
+    return str(uuid.uuid5(_PEPPER_TAG_NS, uid.upper()))
 
 
 class PepperC1Coordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -457,7 +465,7 @@ class PepperC1Coordinator(DataUpdateCoordinator[dict[str, Any]]):
         try:
             from homeassistant.components import tag as ha_tag  # noqa: PLC0415
             self.hass.async_create_task(
-                ha_tag.async_scan_tag(self.hass, uid, self.device_id)
+                ha_tag.async_scan_tag(self.hass, _uid_to_tag_id(uid), self.device_id)
             )
         except Exception:  # noqa: BLE001
             pass
