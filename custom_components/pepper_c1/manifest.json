@@ -5,6 +5,7 @@
   "documentation": "https://github.com/eccel-dev/ha-pepper-c1",
   "issue_tracker": "https://github.com/eccel-dev/ha-pepper-c1/issues",
   "requirements": ["pepper-c1>=0.2.0"],
+  "dependencies": ["tag"],
   "config_flow": true,
   "iot_class": "local_push",
   "codeowners": ["@eccel-dev"]
