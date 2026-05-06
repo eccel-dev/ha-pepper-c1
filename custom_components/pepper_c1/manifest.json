@@ -1,12 +1,12 @@
 {
   "domain": "pepper_c1",
   "name": "Eccel C1 RFID Reader",
-  "version": "2.0.0",
+  "codeowners": ["@eccel-dev"],
+  "config_flow": true,
+  "dependencies": ["tag"],
   "documentation": "https://github.com/eccel-dev/ha-pepper-c1",
+  "iot_class": "local_push",
   "issue_tracker": "https://github.com/eccel-dev/ha-pepper-c1/issues",
   "requirements": ["pepper-c1>=0.2.0"],
-  "dependencies": ["tag"],
-  "config_flow": true,
-  "iot_class": "local_push",
-  "codeowners": ["@eccel-dev"]
+  "version": "2.0.0"
 }
