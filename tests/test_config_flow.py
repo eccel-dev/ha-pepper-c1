@@ -84,7 +84,7 @@ class TestConfigFlowUser:
             "custom_components.pepper_c1.config_flow._check_port_available",
             new=AsyncMock(return_value=False),
         ):
-            result = await flow.async_step_user({"server_port": 1234})
+            result = await flow.async_step_hub({"server_port": 1234})
 
         assert result["type"] == "form"
         assert result["errors"]["base"] == "port_in_use"
