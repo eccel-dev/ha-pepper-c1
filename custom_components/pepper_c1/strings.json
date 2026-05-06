@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Eccel C1 — connection mode",
+        "description": "Choose how Home Assistant connects to the Eccel C1 RFID reader.",
+        "data": {
+          "connection_mode": "Connection mode"
+        }
+      },
+      "hub": {
+        "title": "Configure Eccel C1 hub",
+        "description": "Home Assistant will listen for incoming connections from Eccel C1 readers. Configure each reader to connect to the Home Assistant IP address on the TCP port below.",
+        "data": {
+          "server_port": "TCP server port"
+        }
+      },
+      "client": {
+        "title": "Connect to Eccel C1 reader",
+        "description": "Enter the IP address and port of the reader. Home Assistant will connect to it and read the device information.",
+        "data": {
+          "host": "Reader IP address",
+          "port": "Reader TCP port"
+        }
+      },
+      "client_confirm": {
+        "title": "Eccel C1 reader settings",
+        "description": "Found a Eccel C1 reader:\n- **Address:** {host}:{port}\n- **Firmware:** {firmware}\n\nSet a name and connection parameters.",
+        "data": {
+          "device_name": "Reader name",
+          "polling_timeout_ms": "No-frame timeout → tag gone (ms, 0–5000)",
+          "area_id": "Area (optional)"
+        }
+      },
+      "confirm_device": {
+        "title": "New Eccel C1 reader",
+        "description": "A new RFID reader was discovered:\n- **Device name:** {device_name}\n- **Firmware:** {firmware}\n- **IP address:** {ip}\n\nAssign a name and approve it to add to Home Assistant. After approval the reader will reconnect automatically.",
+        "data": {
+          "device_name": "Reader name",
+          "area_id": "Area (optional)"
+        }
+      }
+    },
+    "error": {
+      "port_in_use": "The port is already in use by another application.",
+      "cannot_connect": "Cannot connect to the reader. Check the IP address and port and make sure the reader is reachable on the network."
+    },
+    "abort": {
+      "already_configured": "Eccel C1 hub is already configured.",
+      "already_in_progress": "Approval of this reader is already in progress.",
+      "device_approved": "Reader approved. It will reconnect automatically and appear in the device list."
+    }
+  }
+}

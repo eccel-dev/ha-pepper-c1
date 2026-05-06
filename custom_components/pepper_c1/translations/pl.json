@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Eccel C1 — tryb połączenia",
+        "description": "Wybierz sposób połączenia Home Assistant z czytnikiem RFID Eccel C1.",
+        "data": {
+          "connection_mode": "Tryb połączenia"
+        }
+      },
+      "hub": {
+        "title": "Skonfiguruj hub Eccel C1",
+        "description": "Home Assistant będzie nasłuchiwał połączeń od czytników Eccel C1. Skonfiguruj czytniki tak, aby łączyły się z adresem IP Home Assistant na podanym porcie TCP.",
+        "data": {
+          "server_port": "Port TCP serwera"
+        }
+      },
+      "client": {
+        "title": "Połącz z czytnikiem Eccel C1",
+        "description": "Podaj adres IP i port czytnika. Home Assistant spróbuje nawiązać połączenie i odczytać dane urządzenia.",
+        "data": {
+          "host": "Adres IP czytnika",
+          "port": "Port TCP czytnika"
+        }
+      },
+      "client_confirm": {
+        "title": "Konfiguracja czytnika Eccel C1",
+        "description": "Znaleziono czytnik Eccel C1:\n- **Adres:** {host}:{port}\n- **Firmware:** {firmware}\n\nNadaj nazwę i ustaw parametry połączenia.",
+        "data": {
+          "device_name": "Nazwa czytnika",
+          "polling_timeout_ms": "Czas bez ramki → tag zniknął (ms, 0–5000)",
+          "area_id": "Pomieszczenie (opcjonalnie)"
+        }
+      },
+      "confirm_device": {
+        "title": "Nowy czytnik Eccel C1",
+        "description": "Znaleziono nowy czytnik RFID:\n- **Nazwa urządzenia:** {device_name}\n- **Wersja firmware:** {firmware}\n- **Adres IP:** {ip}\n\nNadaj mu nazwę i zatwierdź, aby dodać do Home Assistant. Po akceptacji czytnik połączy się ponownie i będzie gotowy do użycia.",
+        "data": {
+          "device_name": "Nazwa czytnika",
+          "area_id": "Pomieszczenie (opcjonalnie)"
+        }
+      }
+    },
+    "error": {
+      "port_in_use": "Port jest już zajęty przez inną aplikację.",
+      "cannot_connect": "Nie można połączyć się z czytnikiem. Sprawdź adres IP, port i czy czytnik jest dostępny w sieci."
+    },
+    "abort": {
+      "already_configured": "Hub Eccel C1 jest już skonfigurowany.",
+      "already_in_progress": "Akceptacja tego czytnika jest już w toku.",
+      "device_approved": "Czytnik został zatwierdzony. Połączy się automatycznie i pojawi się na liście urządzeń."
+    }
+  }
+}

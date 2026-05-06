@@ -1,0 +1,8 @@
+# Zależności deweloperskie — instalacja: pip install -r requirements-dev.txt
+pepper-c1==0.2.0
+homeassistant>=2024.1.0
+pytest>=7.0
+pytest-asyncio>=0.23
+pytest-homeassistant-custom-component>=0.13
+ruff>=0.4
+mypy>=1.9

@@ -1,0 +1,5 @@
+{
+  "name": "Eccel C1 RFID Reader",
+  "render_readme": true,
+  "homeassistant": "2024.1.0"
+}

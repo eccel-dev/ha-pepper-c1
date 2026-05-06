@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Eccel C1 — modo de conexión",
+        "description": "Elige cómo se conectará Home Assistant al lector RFID Eccel C1.",
+        "data": {
+          "connection_mode": "Modo de conexión"
+        }
+      },
+      "hub": {
+        "title": "Configurar hub Eccel C1",
+        "description": "Home Assistant escuchará conexiones entrantes de los lectores Eccel C1. Configura cada lector para que se conecte a la dirección IP de Home Assistant en el puerto TCP indicado.",
+        "data": {
+          "server_port": "Puerto TCP del servidor"
+        }
+      },
+      "client": {
+        "title": "Conectar al lector Eccel C1",
+        "description": "Introduce la dirección IP y el puerto del lector. Home Assistant intentará conectarse y leer la información del dispositivo.",
+        "data": {
+          "host": "Dirección IP del lector",
+          "port": "Puerto TCP del lector"
+        }
+      },
+      "client_confirm": {
+        "title": "Configuración del lector Eccel C1",
+        "description": "Se encontró un lector Eccel C1:\n- **Dirección:** {host}:{port}\n- **Firmware:** {firmware}\n\nAsigna un nombre y configura los parámetros de conexión.",
+        "data": {
+          "device_name": "Nombre del lector",
+          "polling_timeout_ms": "Tiempo sin trama → etiqueta ausente (ms, 0–5000)",
+          "area_id": "Área (opcional)"
+        }
+      },
+      "confirm_device": {
+        "title": "Nuevo lector Eccel C1",
+        "description": "Se descubrió un nuevo lector RFID:\n- **Nombre del dispositivo:** {device_name}\n- **Firmware:** {firmware}\n- **Dirección IP:** {ip}\n\nAsigna un nombre y apruébalo para añadirlo a Home Assistant. Tras la aprobación el lector se reconectará automáticamente.",
+        "data": {
+          "device_name": "Nombre del lector",
+          "area_id": "Área (opcional)"
+        }
+      }
+    },
+    "error": {
+      "port_in_use": "El puerto ya está en uso por otra aplicación.",
+      "cannot_connect": "No se puede conectar al lector. Verifica la dirección IP y el puerto, y asegúrate de que el lector sea accesible en la red."
+    },
+    "abort": {
+      "already_configured": "El hub Eccel C1 ya está configurado.",
+      "already_in_progress": "La aprobación de este lector ya está en curso.",
+      "device_approved": "Lector aprobado. Se reconectará automáticamente y aparecerá en la lista de dispositivos."
+    }
+  }
+}
