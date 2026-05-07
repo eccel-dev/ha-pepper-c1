@@ -50,5 +50,13 @@
       "already_in_progress": "Akceptacja tego czytnika jest już w toku.",
       "device_approved": "Czytnik został zatwierdzony. Połączy się automatycznie i pojawi się na liście urządzeń."
     }
+  },
+  "selector": {
+    "connection_mode": {
+      "options": {
+        "hub": "Hub (serwer TCP) — czytniki łączą się z HA (czytnik: tryb klienta TCP)",
+        "client": "Klient — HA łączy się z czytnikiem po IP (czytnik: tryb serwera TCP)"
+      }
+    }
   }
 }

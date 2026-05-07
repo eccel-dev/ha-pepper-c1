@@ -112,10 +112,8 @@ class PepperC1ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required(CONF_CONNECTION_MODE, default=CONNECTION_MODE_HUB): selector.SelectSelector(
                     selector.SelectSelectorConfig(
-                        options=[
-                            {"value": CONNECTION_MODE_HUB, "label": "Hub (serwer TCP) — czytniki łączą się z HA (czytnik: tryb klienta TCP)"},
-                            {"value": CONNECTION_MODE_CLIENT, "label": "Klient — HA łączy się z czytnikiem po IP (czytnik: tryb serwera TCP)"},
-                        ],
+                        options=[CONNECTION_MODE_HUB, CONNECTION_MODE_CLIENT],
+                        translation_key="connection_mode",
                         mode=selector.SelectSelectorMode.LIST,
                     )
                 ),
@@ -255,6 +253,9 @@ class PepperC1ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         device_id = discovery_info["device_id"]
         await self.async_set_unique_id(f"{hub_entry_id}_{device_id}")
         self._discovery_info = dict(discovery_info)
+        self.context["title_placeholders"] = {
+            "name": discovery_info.get("name") or f"Eccel C1 ({discovery_info.get('ip', '?')})"
+        }
         return await self.async_step_confirm_device()
 
     async def async_step_confirm_device(

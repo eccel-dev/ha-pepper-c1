@@ -33,7 +33,7 @@
         }
       },
       "confirm_device": {
-        "title": "New Eccel C1 reader",
+        "title": "{name}",
         "description": "A new RFID reader was discovered:\n- **Device name:** {device_name}\n- **Firmware:** {firmware}\n- **IP address:** {ip}\n\nAssign a name and approve it to add to Home Assistant. After approval the reader will reconnect automatically.",
         "data": {
           "device_name": "Reader name",
@@ -49,6 +49,14 @@
       "already_configured": "Eccel C1 hub is already configured.",
       "already_in_progress": "Approval of this reader is already in progress.",
       "device_approved": "Reader approved. It will reconnect automatically and appear in the device list."
+    }
+  },
+  "selector": {
+    "connection_mode": {
+      "options": {
+        "hub": "Hub (TCP server) — readers connect to HA (reader: TCP client mode)",
+        "client": "Client — HA connects to the reader by IP (reader: TCP server mode)"
+      }
     }
   }
 }

@@ -50,5 +50,13 @@
       "already_in_progress": "La aprobación de este lector ya está en curso.",
       "device_approved": "Lector aprobado. Se reconectará automáticamente y aparecerá en la lista de dispositivos."
     }
+  },
+  "selector": {
+    "connection_mode": {
+      "options": {
+        "hub": "Hub (servidor TCP) — lectores se conectan a HA (lector: modo cliente TCP)",
+        "client": "Cliente — HA se conecta al lector por IP (lector: modo servidor TCP)"
+      }
+    }
   }
 }
