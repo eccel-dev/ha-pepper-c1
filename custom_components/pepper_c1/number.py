@@ -9,7 +9,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DATA_COORDINATORS, DATA_ENTITY_ADDERS, DOMAIN
+from .const import CONF_POLLING_TIMEOUT_MS, DATA_COORDINATORS, DATA_ENTITY_ADDERS, DOMAIN
 from .coordinator import PepperC1Coordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -60,10 +60,12 @@ class PepperC1PollingTimeoutNumber(NumberEntity):
     async def async_set_native_value(self, value: float) -> None:
         new_ms = int(value)
         self._coordinator.polling_timeout_ms = new_ms
-        if self._coordinator.reader_polling_active:
+        self.hass.config_entries.async_update_entry(
+            self._entry,
+            options={**self._entry.options, CONF_POLLING_TIMEOUT_MS: new_ms},
+        )
+        if self._coordinator.polling_active:
             def _cmd(reader) -> None:
-                reader.set_polling(False)
                 reader.polling_setup_timeout(new_ms)
-                reader.set_polling(True)
             self._coordinator.enqueue_reader_command(_cmd)
         self.async_write_ha_state()

@@ -17,6 +17,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
     CONF_POLLING_TIMEOUT_MS,
+    CONF_READER_POLLING_ENABLED,
     DEFAULT_POLLING_TIMEOUT_MS,
     DOMAIN,
     EVENT_TAG_SCANNED,
@@ -50,15 +51,16 @@ class PepperC1Coordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.device_id = device_id
         self.device_name = device_name
         self._on_connection_lost = on_connection_lost
-        self.polling_timeout_ms: int = entry.data.get(
-            CONF_POLLING_TIMEOUT_MS, DEFAULT_POLLING_TIMEOUT_MS
+        self.polling_timeout_ms: int = entry.options.get(
+            CONF_POLLING_TIMEOUT_MS,
+            entry.data.get(CONF_POLLING_TIMEOUT_MS, DEFAULT_POLLING_TIMEOUT_MS),
         )
 
         self._firmware: str | None = None
         self._socket: socket.socket | None = None
         self._stop_event = threading.Event()
         self._polling_active: bool = False
-        self._reader_polling_active: bool = False
+        self._reader_polling_active: bool = entry.options.get(CONF_READER_POLLING_ENABLED, True)
         self._listener_thread: threading.Thread | None = None
         self._watchdog_task: asyncio.Task[None] | None = None
         self._last_frame_time: float = 0.0
@@ -137,7 +139,6 @@ class PepperC1Coordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def async_stop(self) -> None:
         """Stop listening."""
         self._polling_active = False
-        self._reader_polling_active = False
         self._stop_event.set()
 
         if self._socket is not None:
@@ -182,22 +183,18 @@ class PepperC1Coordinator(DataUpdateCoordinator[dict[str, Any]]):
                 except Exception:
                     firmware = self._firmware
 
-                self.hass.loop.call_soon_threadsafe(self._on_connected, firmware)
-                _LOGGER.debug(
-                    "Eccel C1 %r: firmware=%s, configuring async mode...",
-                    self.device_id,
-                    firmware,
-                )
-
                 reader.set_polling(False)
                 reader.polling_setup_timeout(self.polling_timeout_ms)
                 reader.polling_setup_async(known=False, frame_format=PollingEventFormat.JSON)
                 reader.polling_setup_async(known=True, frame_format=PollingEventFormat.JSON)
-                reader.set_polling(True)
-                self._reader_polling_active = True
+                if self._reader_polling_active:
+                    reader.set_polling(True)
+                self.hass.loop.call_soon_threadsafe(self._on_connected, firmware)
                 _LOGGER.debug(
-                    "Eccel C1 %r: async mode active (timeout=%d ms)",
+                    "Eccel C1 %r: firmware=%s, polling=%s (timeout=%d ms)",
                     self.device_id,
+                    firmware,
+                    self._reader_polling_active,
                     self.polling_timeout_ms,
                 )
 

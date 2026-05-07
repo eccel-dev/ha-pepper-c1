@@ -5,6 +5,7 @@ DOMAIN = "pepper_c1"
 CONF_SERVER_PORT = "server_port"
 CONF_POLLING_TIMEOUT_MS = "polling_timeout_ms"
 CONF_CONNECTION_MODE = "connection_mode"
+CONF_READER_POLLING_ENABLED = "reader_polling_enabled"
 
 DEFAULT_SERVER_PORT = 1234
 DEFAULT_READER_PORT = 1234

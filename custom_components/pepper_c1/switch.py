@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DATA_COORDINATORS, DATA_ENTITY_ADDERS, DOMAIN
+from .const import CONF_READER_POLLING_ENABLED, DATA_COORDINATORS, DATA_ENTITY_ADDERS, DOMAIN
 from .coordinator import PepperC1Coordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -50,33 +50,28 @@ class PepperC1PollingSwitch(CoordinatorEntity[PepperC1Coordinator], SwitchEntity
 
     @property
     def is_on(self) -> bool:
-        return self.coordinator.reader_polling_active
+        return self.coordinator._reader_polling_active
 
-    async def async_turn_on(self, **kwargs: Any) -> None:
-        if self.coordinator.reader_polling_active:
-            return
-        if not self.coordinator.polling_active:
-            return
-        from pepper_c1 import PollingEventFormat  # noqa: PLC0415
-        pef = PollingEventFormat
-
-        def _cmd(reader) -> None:
-            reader.set_polling(False)
-            reader.polling_setup_async(known=False, frame_format=pef.JSON)
-            reader.polling_setup_async(known=True, frame_format=pef.JSON)
-            reader.set_polling(True)
-
+    async def async_turn_on(self) -> None:
         self.coordinator._reader_polling_active = True
-        self.coordinator.enqueue_reader_command(_cmd)
+        self.hass.config_entries.async_update_entry(
+            self._entry,
+            options={**self._entry.options, CONF_READER_POLLING_ENABLED: True},
+        )
+        if self.coordinator.polling_active:
+            def _cmd(reader) -> None:
+                reader.set_polling(True)
+            self.coordinator.enqueue_reader_command(_cmd)
         self.async_write_ha_state()
 
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        if not self.coordinator.reader_polling_active:
-            return
-
-        def _cmd(reader) -> None:
-            reader.set_polling(False)
-
+    async def async_turn_off(self) -> None:
         self.coordinator._reader_polling_active = False
-        self.coordinator.enqueue_reader_command(_cmd)
+        self.hass.config_entries.async_update_entry(
+            self._entry,
+            options={**self._entry.options, CONF_READER_POLLING_ENABLED: False},
+        )
+        if self.coordinator.polling_active:
+            def _cmd(reader) -> None:
+                reader.set_polling(False)
+            self.coordinator.enqueue_reader_command(_cmd)
         self.async_write_ha_state()
