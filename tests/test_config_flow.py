@@ -1,4 +1,4 @@
-"""Testy config flow — formularz konfiguracji huba Pepper C1."""
+"""Tests for the Pepper C1 hub config flow."""
 from __future__ import annotations
 
 import json

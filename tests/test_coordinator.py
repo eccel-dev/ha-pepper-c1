@@ -1,4 +1,4 @@
-"""Testy coordinatora Pepper C1 (tryb serwera)."""
+"""Tests for the Pepper C1 coordinator (server mode)."""
 from __future__ import annotations
 
 import socket
@@ -12,7 +12,7 @@ def make_coordinator(
     device_name: str = "Pepper C1 Entrance",
     timeout_ms: int = 200,
 ):
-    """Tworzy coordinator bez uruchamiania HA (omija __init__ DataUpdateCoordinator)."""
+    """Create a coordinator without starting HA (bypasses DataUpdateCoordinator __init__)."""
     from custom_components.pepper_c1.coordinator import PepperC1Coordinator
 
     coordinator = PepperC1Coordinator.__new__(PepperC1Coordinator)

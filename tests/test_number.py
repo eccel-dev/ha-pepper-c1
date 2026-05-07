@@ -1,4 +1,4 @@
-"""Testy encji number — polling timeout."""
+"""Tests for the polling timeout number entity."""
 from __future__ import annotations
 
 import pytest
